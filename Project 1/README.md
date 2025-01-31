@@ -4,6 +4,10 @@ Fully just copied some of this code from solana docs lol. But the value-add is e
 
 To run this code, go to https://beta.solpg.io/ and create a new project (any type: Anchor, Native, etc.), then copy my client file into /client/client.ts. Click run in the web interface, look at the console.
 
+We are using the Web3.js API for making solana blockchain interactions easier. It provides a library of classes and functions that the developer uses. The developer's end goal is to create a `Transaction` object (filling out the correct fields and whatnot) and pass it into a `sendTransaction` function. 
+
+Then the dev calls `$ node ./client.ts`. The file starts executing. The `Transaction` object is loaded into the `send` function and execution jumps to your local copy of the web3 library. The library connects to a validator over HTTP and sends your compiled transaction. The API listens on a port for an HTTP reponse. The API prints the response to your console.
+
 ## connect to devnet
 ```ts
 // Use Playground cluster connection
@@ -26,7 +30,7 @@ const preBalance1 = await connection.getBalance(sender.publicKey);
 ```
 The playground module's ```connection``` field has helper that interacts with the devnet.
 
-## The TransactionInstruction class
+## The API's TransactionInstruction class
 ```ts
 // Instantiate TransactionInstruction class
 const instructionInstance = new TransactionInstruction({
@@ -43,12 +47,22 @@ The web3.js API provides a TransactionInstruction class.
 - The second field is programID. This specifies which program account holds the instruction we will be executing.
 - The third field is data, which holds a serialized buffer. The first part of the buffer says which instruction within the program account we want to execute. The second part of the buffer holds instruction-specific parameters, which in our case is transferAmount.
 
-This code is sent as-is to the validators (aka the Solana runtime). The validator will unpack this object, look for the programID's code in its local copy of the blockchain and find the exact instruction within that code. Then it expects the rest of your TransactionInstruction object to provide the arguments needed for that instruction. Then it will load those arguments into a function call, and make the call.
+This code is sent as-is to the validators (aka the Solana runtime). The validator will unpack this object, look for the program's address in its local copy of the blockchain, and copy the program's bytecode into its local memory. Then it expects the rest of your TransactionInstruction object to provide the arguments needed for that instruction (transferAmount). Then it loads those args into the bytecode and runs it.
 
-## digital signature
+## The API's Transaction class
+```ts
+// Instantiate Transaction class. Populate the "instruction" field.
+const transaction = new Transaction();
+transaction.add(instructionInstance);
+```
+The only responsibility of the Transaction object is to bundle multiple instructions. Specifically, it loads them into its member `Vec!<TransactionInstruction>`. 
+
+## The API connects, sends, and receives receipt
 ```ts
 // Use Playground wallet as sender, 
 const sender = pg.wallet.keypair;
+
+// ...
 
 // Send the transaction to the network
   const transactionSignature = await sendAndConfirmTransaction(
@@ -57,4 +71,7 @@ const sender = pg.wallet.keypair;
     [sender] // signer
   );
 ```
-In this code, we pass the sender's entire keypair because the Web3.js API function generates a digital signature from the private key. This digital signature is included in some struct.
+The Web3.js API provides ```sendAndConfirmTransaction()``` function which does some logic before sending the `Transaction` object to the network. The  has 3 responsibilities:
+- Signs the transaction. In this code we pass the sender's entire keypair because the function generates a digital signature from the private key, then updates a field in the `Transaction` object, which had not been filled out yet. 
+- Connects to the specified network. Playground automatically set `pg.connection.URL()` with the devnet URL. 
+- Serializes your `Transaction` object into a JSON that the validator will understand. Sends it over the network, listen on a port for a response, pipe that response into your console.
