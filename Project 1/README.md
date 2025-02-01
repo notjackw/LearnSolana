@@ -76,19 +76,9 @@ The Web3.js API provides ```sendAndConfirmTransaction()``` function which does s
 - Connects to the specified network via HTTP. Playground automatically set `pg.connection.URL()` with the devnet URL. 
 - Serializes your `Transaction` object into a JSON that the validator will understand. Sends it over the network, listen on a port for a response, pipe that response into your console.
 
-## The Validator
-Q&A:
-- what physical computers receive the transaction object?
--- any computer that is running a validator. That computer's IP needs to be added to the devnet URL DNS records. Any transaction you send to the devnet is received by all IPs in the domain's registry.
-
-The validator does a lot of stuff, but not necessary to talk about all of it here. It does these things for our transaction:
-- digital signature --> function --> public key
-It runs the digital signature through a function and gets a public key. It checks that the resulting public key exists on the blockchain and has the Lamport balance needed.
-
-- 
-
 ## Output
 ```
 Transaction Signature: https://explorer.solana.com/tx/79QGGTARtTrPLKWUh3x1WTq1LW2KwyKRCK4Kk7JNkHeRg5RVyfj447QuVPK7hFa7XsYHi9ffX5Zkz7Jp6A2qD2j?cluster=devnet
 ```
-The only discussion-worthy part of the output is the returned transaction signature. 
+The only discussion-worthy part of the output is the transaction signature. This is the same digital signature that your computer's web3 API created from your private key and added to the Transaction object. 
+Note that this is also visible in Solana explorer. The explorer shows every block in the blockchain via transaction signature, and every account in the ecosystem via its public key.
