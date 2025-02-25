@@ -2,7 +2,10 @@
 
 This repo contains super basic solana projects including:
 - Project 1: Using the Web3.js client API to interact with the Solana Playground cluster and the Solana runtime.
-- Project 2: 
+- Project 2: Same as project 1 but replaces everything provided by the playground with a Web3.js implementation.
+- Project 3: Uses anchor. To-do list smart contract.
+- Project 4: Uses anchor. Voting dApp.
+- Project 5: Uses anchor. Journal entry dApp.
 
 ## Blockchain basics:
 Here is the control flow of a transaction.
