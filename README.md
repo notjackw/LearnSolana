@@ -1,9 +1,10 @@
-# LearnSolana
+# LearnSolana Repo
 
 This repo contains super basic solana projects including:
 - Project 1: Using the Web3.js client API to interact with the Solana Playground cluster and the Solana runtime.
+- Project 2: 
 
-# Blockchain basics:
+## Blockchain basics:
 Here is the control flow of a transaction.
 
 ## The client
