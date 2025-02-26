@@ -1,10 +1,8 @@
 # Project 1: Basic transaction using playground cluster and the Web3.js client API.
 
-Fully just copied some of this code from solana docs lol. But the value-add is extra comments, logging, and this README.
-
 To run this code, go to https://beta.solpg.io/ and create a new project (any type: Anchor, Native, etc.), then copy my client file into /client/client.ts. Click run in the web interface, look at the console.
 
-We are using the Web3.js API for making solana blockchain interactions easier. It provides a library of classes and functions that the developer uses. The developer's end goal is to create a `Transaction` object (filling out the correct fields and whatnot) and pass it into a `sendTransaction` function. 
+We are using the Web3.js API for making solana blockchain interactions easier. It provides a library for client-side stuff like querying account data and sending transactions. The developer's end goal is to create a `Transaction` object (filling out the correct fields and whatnot) and pass it into a `sendTransaction` function. 
 
 Then the dev calls `$ node ./client.ts`. The file starts executing locally. The `Transaction` object is loaded into the `send` function and execution jumps to the definition in your local copy of the web3 library. The library connects to a validator over HTTP and sends the passed-in Transaction object. The API listens on a port for an HTTP reponse from the validator. The API prints the response to your console.
 

@@ -1,0 +1,3 @@
+Here you will see that the owner of a wallet is the System Program (program ID 111111111111111). For a data account, only the owner can modify the state. It is impossible for you to write a smart contract that modifies the lamport balance of a wallet-- your program must call the system program's transfer instruction to modify the values.
+
+The System Program is a typical program account. It has the address 111111111111111.
