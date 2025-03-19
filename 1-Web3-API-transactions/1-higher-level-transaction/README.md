@@ -3,7 +3,9 @@ The instruction is build in a way easier way compared to the previous example.
 Before (example 0): We create an instruction by loading the following into a generic TransactionInstruction class. This is the lowest level format for all instructions.
 - keys
 - system program ID
-- data, which contains lamport amount and the index to the transfer instruction
+- data:
+  - instruction index
+  - lamport amount
 
 Now: We create an instruction by loading the following into the web3api's SystemProgram class. The lowest level instruction format is still used but is abstracted in this case. The API autopopulates the programID field and data field, which still contains lamport amount and index.
 - keys
