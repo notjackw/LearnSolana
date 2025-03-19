@@ -24,9 +24,9 @@ Another field of the ```pg``` object is the pre-configured ```wallet``` field, w
 ## check balances
 ```ts
 // Check and log balances before transfer
-const preBalance1 = await connection.getBalance(sender.publicKey);
+connection.getBalance(sender.publicKey);
 ```
-The playground module's ```connection``` field has helper that interacts with the devnet.
+This function is an RPC. The Web3API internally makes a network request to a Public RPC Node which handles the request. This function is only a read request, so the Public RPC Node checks its ledger and fulfills the request. For functions that require writing to the network, the Public RPC Node will forward the request to the nearest Validator.
 
 ## The API's TransactionInstruction class
 ```ts
